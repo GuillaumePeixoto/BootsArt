@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Boots Art | Commande N°{{ commande.id }}
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center my-5 titreprofil">Commande Numéro {{ commande.id }}</h1>
+    <div class="container mb-5">
+        {% for produit in articles %}
+            <div class="card mx-auto col-md-10 shadow p-2 bg-body rounded mb-2">
+                <div class="p-2 d-flex flex-wrap m-0">
+                    <div class="col-md-3 col-12 text-center">
+                        <img src="{{ asset('uploads/photos/' ~ produit.produit.photo) }}" class="col-8 col-md-12 mx-auto" alt="{{ produit.produit.photo }}">
+                    </div>
+                    <div class="col-md-5 col-6 d-flex align-items-center">
+                        <div class="ms-2">
+                            <p class="fs-4 fw-bold">{{ produit.produit.titre }}</p>
+                            <p><strong>Taille : </strong> {{produit.format.format}} ( {{produit.format.hauteur}}cm x {{produit.format.largeur}}cm ) </p>
+                            <p><strong>Quantité :</strong> {{produit.quantite}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-6 d-flex align-items-center justify-content-end">
+                        <p class="fw-bold fs-4">Prix unitaire : {{produit.format.prix}} €</p>
+                    </div>
+                </div>  
+            </div>
+        {% endfor %}
+        <div class="mt-3 bg-body mx-auto col-md-10 shadow p-3 rounded d-flex flex-wrap ">
+            <p class="fw-bold fs-4 col-sm-6 col-12">
+                {% if commande.promo is not null %}
+                    Code Promo utilisé : {{ commande.promo.promoCode }} ( -{{commande.promo.promoValue}}
+                    {% if commande.promo.promoType == 'Pourcentage' %}
+                        %
+                    {% else %}
+                        €
+                    {% endif %}
+                    )
+                {% endif %}
+            </p>
+            <p class="text-end fw-bold fs-4 col-sm-6 col-12">Total : {{ commande.montant }} €</p>
+        </div>
+    </div>
+
+{% endblock %}

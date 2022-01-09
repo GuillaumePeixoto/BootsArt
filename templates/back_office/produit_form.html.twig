@@ -1,0 +1,32 @@
+{% extends "base_backoffice.html.twig" %}
+
+{% block body %}
+
+    <h2 class="text-center my-3">{{action}} du produit</h2>
+
+    {{ form_start(produitForm, {'attr': {"class": "col-7 mx-auto"}}) }}
+
+        {% if action == 'Ajout' %}
+            {{ form_row(produitForm.photo) }}        
+        {% endif %}
+
+        {% if photoActuel is not empty %}
+        <div class="p-2 text-center">
+            <h3>Photo Actuelle</h3>
+            <img src="{{ asset('uploads/photos/' ~ photoActuel) }}"  class="col-lg-4 col-md-8 col-10" alt="photoActuel">
+        </div>
+        {% endif %}
+
+        {{ form_row(produitForm.titre) }}
+
+        {{ form_row(produitForm.description) }}
+        
+        {{ form_row(produitForm.categorie) }}
+
+        {{ form_row(produitForm.format) }}
+
+        <button type="submit" class="btn btn-dark">Continuer</button>
+    {{ form_end(produitForm) }}
+
+
+{% endblock %}

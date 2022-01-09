@@ -1,0 +1,33 @@
+{% extends "base_backoffice.html.twig" %}
+
+{% block body %}
+
+    <h2 class="text-center my-3">{{action}} d'un user</h2>
+
+    {{ form_start(userForm, {'attr': {"class": "col-7 mx-auto"}}) }}
+
+        {{ form_row(userForm.pseudo) }}
+
+        {{ form_row(userForm.email) }}
+
+        {{ form_row(userForm.prenom) }}
+
+        {{ form_row(userForm.nom) }}
+
+        {{ form_row(userForm.adresse) }}
+
+        {{ form_row(userForm.ville) }}
+
+        {{ form_row(userForm.codePostal) }}
+
+        {% if userForm.password is defined %}
+            {{ form_row(userForm.password) }}
+        {% endif %}
+
+        {{ form_row(userForm.roles) }}
+
+        <button type="submit" class="btn btn-dark">Continuer</button>
+    {{ form_end(userForm) }}
+
+
+{% endblock %}

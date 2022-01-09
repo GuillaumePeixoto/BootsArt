@@ -1,0 +1,341 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+
+        <title> {% block title %} Boots Arts {% endblock %} </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+
+        <link rel="stylesheet" href=" {{asset('css/lightbox.css')}} ">
+
+
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil&display=swap" rel="stylesheet">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Karma&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href=" {{asset('css/slider.min.css')}}">
+
+        <link rel="stylesheet" href=" {{asset('css/base.css')}} ">
+
+        <script>(function(w,d){!function(e,t,r,a,s){e[r]=e[r]||{},e[r].executed=[],e.zaraz={deferred:[]};var n=t.getElementsByTagName("title")[0];e[r].c=t.cookie,n&&(e[r].t=t.getElementsByTagName("title")[0].text),e[r].w=e.screen.width,e[r].h=e.screen.height,e[r].j=e.innerHeight,e[r].e=e.innerWidth,e[r].l=e.location.href,e[r].r=t.referrer,e[r].k=e.screen.colorDepth,e[r].n=t.characterSet,e[r].o=(new Date).getTimezoneOffset(),//
+        e[s]=e[s]||[],e.zaraz._preTrack=[],e.zaraz.track=(t,r)=>e.zaraz._preTrack.push([t,r]),e[s].push({"zaraz.start":(new Date).getTime()});var i=t.getElementsByTagName(a)[0],o=t.createElement(a);o.defer=!0,o.src="/cdn-cgi/zaraz/s.js?"+new URLSearchParams(e[r]).toString(),i.parentNode.insertBefore(o,i)}(w,d,"zarazData","script","dataLayer");})(window,document);</script>
+        
+    </head>
+
+      <style>
+        body 
+        {
+        background: url( '{{ asset("img/fond-6.png") }}' ) no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      
+        } 
+
+
+        .lb-data .lb-close
+        {
+          background: url('{{ asset("img/close.png") }}') top right no-repeat;
+
+        }
+        .lb-nav a.lb-next {
+                  background: url('{{ asset("img/next.png") }}') right 48% no-repeat;
+        }
+
+        .lb-nav a.lb-prev {
+          background:url('{{ asset("img/prev.png") }}') left 48% no-repeat;
+        }
+
+        .lb-cancel {
+          background: url('{{ asset("img/loading.gif") }}') no-repeat;
+        }
+
+ 
+    </style>  
+ 
+<body>
+
+
+  <nav class="navbar navbar-expand-xl navbar-dark bg-dark bgNav" aria-label="Eighth navbar example">
+      <div class="container">
+          <a class="navbar-brand shadow-none" href="{{ path('home') }}" style="background-color:transparent;font-size: 34px;vertical-align: baseline;display: flex;align-items: end;">
+            <img src="{{ asset('img/logocode.png') }}" style="width:50px; background-color:transparent" class="" alt=""><span style="" class="font_titre">oots Art</span></a>
+            <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarsExample07" style="">
+              <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link text-white hover_effect mx-2" aria-current="page" href="{{ path('home') }}">Home</a>
+                </li>
+                {# <li class="dropdown pos-static nav-item">
+                  <button class="btn border-0 text-white dropdown-toggle nav-link hover_effect" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    Produit
+                  </button>
+                  <ul class="dropdown-menu under-menu" aria-labelledby="dropdownMenuButton1">
+                    <div class="row">
+                      <div class="col-12 text-center">
+                        <a href="{{ path('produits') }}" class="fs-5">Tous nos produits</a>
+                      </div>
+                      <div class="column col-6 p-2">
+                        <h3 class="text-center text-white">Categorie</h3>
+                        <div class=" d-flex col-12">
+                          <div class="col-4">
+                            <a class="text-center" href="{{ path('produits_par_cat', {'categorie' : 'anime'}) }}">Anime</a>
+                            <a class="text-center" href="#">Jeu Vidéo</a>
+                            <a class="text-center" href="#">Film</a>
+                          </div>
+                          <div class="col-4">
+                            <a class="text-center" href="#">Retro</a>
+                            <a class="text-center" href="#">Réaliste</a>
+                            <a class="text-center" href="#">Futur</a>
+                          </div>
+                          <div class="col-4">
+                            <a class="text-center" href="#">Voiture</a>
+                            <a class="text-center" href="#">Nature</a>
+                            <a class="text-center" href="#">Espace</a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="column col-3 p-2">
+                        <h3 class="text-center text-white">Format</h3>
+                          <div class="col-12">
+                            <a class="text-center" href="#">M</a>
+                            <a class="text-center" href="#">L</a>
+                            <a class="text-center" href="#">XL</a>
+                          </div>
+                      </div>
+                        <div class="column col-3 p-2">
+                          <h3 class="text-center text-white">Tags</h3> 
+                          <a class="text-center" href="{{ path('produits_par_cat', {'categorie' : 'nouveaute'}) }}">Nouveautés</a>
+                          <a class="text-center" href="#">Bestcellers</a>
+                          <a class="text-center" href="#">Tout nos Produits</a>
+                      </div>
+                    </div>
+                  </ul>
+                </li> #}
+                <li class="nav-item">
+                    <a class="nav-link text-white hover_effect mx-2" href="{{ path('produits') }}">Produits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white hover_effect mx-2" href="{{ path('nos_artistes') }}">Artistes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white hover_effect mx-2" href="{{ path('panier') }}">
+                        Panier&nbsp;
+                          {% set panier = app.session.get('panier') %}
+                          {% set total_article = 0 %}
+                          {% for key, produit in panier %}
+                            {% set total_article = total_article + produit.quantite %} 
+                          {% endfor %}
+                          {% if panier|length > 0 %}
+                              <span class="bg-golden rounded p-1 text-white">{{total_article}}</span>
+                          {% endif %}
+                    </a>
+                 </li>
+            </ul>
+            <div>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if app.user %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white hover_effect mx-2" href="{{ path('profil') }}">Profil</a>
+                        </li>
+                        {% if "ROLE_VENDEUR" in app.user.roles %}
+                            <li class="nav-item">
+                                <a class="nav-link text-white hover_effect mx-2" href="{{ path('mon_profil') }}">Espace Vendeur</a>
+                            </li>
+                        {% endif %}
+                        {% if "ROLE_ADMIN" in app.user.roles %}
+                            <li class="nav-item">
+                                <a class="nav-link text-white hover_effect mx-2" href="{{ path('back_office') }}">BACKOFFICE</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white hover_effect mx-2" href="{{ path('app_logout') }}">Deconnexion</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white hover_effect mx-2" aria-current="page" href="{{ path('app_register') }}">Inscription</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white hover_effect mx-2" href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+          </div>
+      </div>
+  </nav>
+  
+<main>
+{% block body %}
+
+{% endblock %}
+
+</main>
+
+  
+<footer class="footer_bar text-center text-white">
+  
+  <div class="">    
+    <section class="">
+      <form action="">
+        
+        <div class="d-flex justify-content-center">
+
+          
+        <footer class="footer_bar text-center text-white w-100">
+          
+          <div class="">
+            
+            <section class="mb-3 fontfooter p-2">
+              
+              <a class="btn btn-outline-light btn-floating m-1 colorfontReseaux" href="#!" role="button"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+
+              
+              <a class="btn btn-outline-light btn-floating m-1 colorfontReseaux" href="#!" role="button"
+                ><i class="fab fa-twitter"></i
+              ></a>
+
+              
+              <a class="btn btn-outline-light btn-floating m-1 colorfontReseaux" href="#!" role="button"
+                ><i class="fab fa-google"></i
+              ></a>
+
+              
+              <a class="btn btn-outline-light btn-floating m-1 colorfontReseaux" href="#!" role="button"
+                ><i class="fab fa-instagram"></i
+              ></a>
+
+              
+              <a class="btn btn-outline-light btn-floating m-1 colorfontReseaux" href="#!" role="button"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+
+              
+              <a class="btn btn-outline-light btn-floating m-1 colorfontReseaux" href="#!" role="button"
+                ><i class="fab fa-github"></i
+              ></a>
+            </section>
+            
+            <section class="mb-4">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt distinctio earum
+                repellat quaerat voluptatibus placeat nam, commodi optio pariatur est quia magnam
+                eum harum corrupti dicta, aliquam sequi voluptate quas.
+              </p>
+            </section>
+            
+
+            
+            <section class="">
+              
+              <div class="row">
+                
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+                  <a class="footer-link text-white mx-2 text-uppercase allfontcolor couleurfontPC" aria-current="page" href="{{ path('a_propos') }}"><h5>A propos</h5></a>
+
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+                  <a class="footer-link text-white mx-2 text-uppercase allfontcolor couleurfontPC" aria-current="page" href="{{ path('contact') }}"><h5>Contact</h5></a>
+
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+                  <a class="footer-link text-white mx-2 text-uppercase allfontcolor couleurfontPC" aria-current="page" href="{{ path('faq') }}"><h5>FAQ</h5></a>
+
+                </div>
+              
+                <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+
+                  <a class="footer-link text-white mx-2 text-uppercase allfontcolor couleurfontPC" aria-current="page" href="{{ path('legal_notice') }}"><h5>legal Notice</h5></a>
+
+                </div>
+                
+              </div>
+              
+            </section>
+            
+          </div>
+          
+
+          
+          <div class="text-center p-3 colorfontIcon" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2022 Copyright:
+            <a class="colorfontIcon" href="https://mdbootstrap.com/">Boots Art</a>
+          </div>
+          
+        </footer>
+
+
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="{{asset('js/lightbox.js')}}"></script>
+        <script src="{{asset('js/base.js')}}"></script>
+        <script src="{{asset('js/slider.min.js')}}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <script>
+          var splides = document.getElementsByClassName('splide');
+
+          for(var i = 0; i < splides.length; i++)
+          {
+            
+            new Splide( splides[0], {
+              perPage: 5,
+              perMove: 1,
+              focus: 'center',
+              trimSpace: true,
+              pagination: false,
+              autoWidth: true,
+              drag: 'free'
+            }).mount();
+
+            new Splide( splides[1], {
+              perPage: 5,
+              perMove: 1,
+              focus: 'center',
+              trimSpace: true,
+              pagination: false,
+              autoWidth: true,
+              drag: 'free'
+            }).mount();
+
+            new Splide( splides[2], {
+              perPage: 5,
+              perMove: 1,
+              focus: 'center',
+              trimSpace: true,
+              pagination: false,
+              autoWidth: true,
+              drag: 'free'
+            }).mount();
+
+          }
+
+        </script>
+      <script defer src="https://static.cloudflareinsights.com/beacon.min.js/v64f9daad31f64f81be21cbef6184a5e31634941392597" integrity="sha512-gV/bogrUTVP2N3IzTDKzgP0Js1gg4fbwtYB6ftgLbKQu/V8yH2+lrKCfKHelh4SO3DPzKj4/glTO+tNJGDnb0A==" data-cf-beacon='{"rayId":"6bde55290d24a855","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.12.0","si":100}' crossorigin="anonymous"></script>
+    </body>
+</html>

@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Boots Art | Profil
+{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="col-4 mx-auto text-center bg-success p-3 text-white mb-3 rounded">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <h1 class="text-center my-5 titreprofil">Votre page profil : {{ app.user.prenom }} {{ app.user.nom }}</h1>
+
+{# {% if user.roles.0 == 'ROLE_ADMIN' %}
+    <p class="text-center text-secondary">Vous êtes ADMINISTRATEUR du site</p>
+{% endif %} #}
+
+<div class="container mb-5">
+    <div class="card mx-auto col-lg-6 col-md-8 shadow p-3 mb-5 bg-body rounded">
+
+        <div class="d-flex">
+            <img src="{{ asset('uploads/photos/' ~ app.user.imageProfil) }}" class="rounded-circle mx-auto my-3 img_profil">
+        </div>
+        <table class="table text-center mb-0">
+            <tr class="responsive_profil"><td class="fontTD"><strong>Email :</strong></td><td>{{ app.user.email }}</td></tr>
+            <tr class="responsive_profil"><td class="fontTD"><strong>Pseudo :</strong></td><td>{{ app.user.pseudo }}</td></tr>
+            <tr class="responsive_profil"><td class="fontTD"><strong>Prenom :</strong></td><td>{{ app.user.prenom }}</td></tr>
+            <tr class="responsive_profil"><td class="fontTD"><strong>Nom :</strong></td><td>{{ app.user.nom }}</td></tr>
+            <tr class="responsive_profil"><td class="fontTD"><strong>Adresse :</strong></td><td>{{ app.user.adresse }}</td></tr>
+            <tr class="responsive_profil"><td class="fontTD"><strong>Ville :</strong></td><td>{{ app.user.ville }}</td></tr>
+            <tr class="responsive_profil"><td class="fontTD"><strong>Code postal :</strong></td><td>{{ app.user.codePostal }}</td></tr>
+            <tr class="responsive_profil"><a href="{{ path('edit_profil_user', {'id' : app.user.id}) }}" class="text-white btn btn-secondary w-100">Modifier</a></tr>
+        </table>
+    </div>
+    <div class="card mx-auto col-lg-6 col-md-8 shadow p-3 mb-5 bg-body rounded mt-2">
+        <h3 class="text-center mb-2">Historique de Commande</h3>
+        {% if app.user.commandes|length > 0 %}
+            <table class="table text-center mb-0">
+                <thead>
+                    <tr>
+                        <th>Commande Numero</th>
+                        <th>Montant</th>
+                        <th>Date</th>
+                        <th>Etat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for commande in app.user.commandes|reverse %}
+                        <tr>
+                            <td><a href="{{ path('ma_commande', {'id' : commande.id}) }}">{{ commande.id }}</a></td>
+                            <td>{{ commande.montant }} €</td>
+                            <td>{{ commande.dateCommande|date('d-m-Y H:i') }}</td>
+                            <td>{{ commande.etat }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Vous n'avez passée aucune commande.</p>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

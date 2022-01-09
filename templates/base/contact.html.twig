@@ -1,0 +1,135 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Boots Art | Contact
+{% endblock %}
+
+{% block body %}
+
+
+	<section class="section-contact">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-lg-8">
+					<div class="content">
+						<div class="sm-title d-flex align-items-center">
+							<span class="line"></span>
+							<h3>Contactez Nous</h3>
+						</div>
+						<h2 class="title">Comment pouvons-nous vous <span>aider ?</span></h2>
+						<p class="description">Ne vous retenez pas - nous sommes là pour répondre à toutes vos questions ! Consultez aussi la FAQ !</p>
+
+
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="infos">
+						<div class="single-info">
+							<div class="icon">
+								<i class="fas fa-map-marker-alt"></i>
+							</div>
+							<div class="text">
+								<h3>Où nous trouvez ?</h3>
+								<p>12 Rue du Delta, 75009 Paris</p>
+							</div>
+						</div>
+						<div class="single-info">
+							<div class="icon">
+								<i class="fas fa-phone-alt"></i>
+							</div>
+							<div class="text">
+								<h3>Un souci ? Appelez-nous !</h3>
+								<p>01 01 01 01 01</p>
+							</div>
+						</div>
+						<div class="single-info">
+							<div class="icon">
+								<i class="fas fa-envelope"></i>
+							</div>
+							<div class="text">
+								<h3>Envoyez-nous un mail pour vous aider !</h3>
+								<p>boostart@gmail.fr</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+        <section class="mb-4">
+
+
+
+
+    <div class="row">
+
+        <h2 class="contact-titre h1-responsive font-weight-bold text-center  my-4">Contact</h2>
+
+        <div class="col-md-9 mb-md-0 mb-5 pt-5 mx-auto">
+            <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+
+
+                <div class="row">
+
+
+                    <div class="col-md-6">
+                        <div class="md-form mb-0 mb-5">
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Nom Prénom">
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="md-form mb-0 mb-5">
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Email">
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="md-form mb-0 mb-5">
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="Sujet">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="col-md-12">
+
+                        <div class="md-form mb-5">
+                            <textarea type="text" id="message" name="message" rows="2" placeholder="Votre Message" class="form-control md-textarea"></textarea>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </form>
+
+            <div class="text-center text-md-left">
+                <a class="btn btn-dark bouton" onclick="document.getElementById('contact-form').submit();">Envoyé !</a>
+            </div>
+            <div class="status"></div>
+        </div>
+
+
+    </div>
+
+</section>
+	</section>
+
+    
+
+{% endblock %}

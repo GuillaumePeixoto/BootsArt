@@ -1,0 +1,40 @@
+{% extends "base_backoffice.html.twig" %}
+
+{% block body %}
+
+    {% for label, messages in app.flashes(['success', 'danger']) %}
+        {% for message in messages %}
+            <div class="col-6 mx-auto text-center alert alert-{{ label }} my-5">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h2 class="text-center my-3">Liste des commentaires</h2>
+
+    <table class="table table-striped vertical-border text-center" id="table-backoffice-commentaire">
+        <thead>
+            <tr>
+                <th>Titre du Produit</th>
+                {% for data in colonnes %}
+                    {% if data != 'id' %}
+                        <th>{{data|capitalize}}</th>            
+                    {% endif %}
+                {% endfor %}
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commentaire in commentaires %}
+                <tr>
+                    <td class="align-middle">{{ commentaire.produit.titre}}</td>
+                    <td class="align-middle">{{ commentaire.auteur}}</td>
+                    <td class="align-middle">{{ commentaire.commentaire}}</td>
+                    <td class="align-middle">{{ commentaire.date|date('d-m-Y H:i')}}</td>
+                    <td><a href="#" class="btn bg-primary text-white me-2"><i class="bi bi-pencil-square"></i></a><a class="btn bg-danger text-white" href="{{ path('remove_commentaire', {'id' : commentaire.id }) }}"><i class="bi bi-trash"></i></a></td>
+                </tr> 
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

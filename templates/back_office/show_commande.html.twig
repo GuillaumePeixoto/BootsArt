@@ -1,0 +1,45 @@
+{% extends "base_backoffice.html.twig" %}
+
+{% block body %}
+
+    {% for label, messages in app.flashes(['success', 'danger']) %}
+        {% for message in messages %}
+            <div class="col-6 mx-auto text-center alert alert-{{ label }} my-5">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h2 class="text-center my-3">Liste des commandes</h2>
+
+    <table class="table table-striped vertical-border text-center" id="table-backoffice-commande">
+        <thead>
+            <tr>
+                <th>Numero de Commande</th>
+                <th>Client</th>
+                {% for data in colonnes %}
+                    {% if data != 'id' %}
+                        <th>{{data|capitalize}}</th>            
+                    {% endif %}
+                {% endfor %}
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for commande in commandes %}
+                <tr>
+                    <td class="align-middle"><a href="{{ path('commande_backoffice', {'id' : commande.id}) }}" class="text-decoration-none">{{commande.id}}</a></td>
+                    <td class="align-middle">{{ commande.user.id}} - {{commande.user.pseudo}}</td>
+                    <td class="align-middle">{{commande.montant}}</td>
+                    <td class="align-middle">{{ commande.dateCommande|date('d-m-Y H:i')}}</td>
+                    <td class="align-middle">{{ commande.etat}}</td>
+                    <td>
+                        <a class="btn bg-success text-white" href="{{ path('update_commande_backoffice', {'id' : commande.id }) }}"><i class="bi bi-bag-check-fill"></i></a>
+                        <a class="btn bg-danger text-white" href="{{ path('remove_commande', {'id' : commande.id }) }}"><i class="bi bi-trash"></i></a>
+                    </td>
+                </tr> 
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

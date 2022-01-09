@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Boots Art | Produits
+{% endblock %}
+
+{% block body %}
+
+
+ <h1 class='titre'>Tous nos Produits</h1>
+ 
+
+ {# <section id="shop-content" class="bg-gray">
+				<div class="cart-menu clearfix d-flex justify-content-center">
+					<div class="searchwrap">
+						<input type="search" class="search">
+						<button type="submit" class="search-button"><i class="fa fa-search" aria-hidden="true"></i></button></div></section> #}
+
+ <section class="section-products">
+	<div class="container">
+		{# {% if cat is not empty %}
+			<h3 class="titre fs-4"> Recherche : {{ cat }}</h3>
+		{% endif %} #}
+		<div class="row">
+			<div class="col-12 col-lg-3">
+				<div class="bg-light rounded p-3 mb-3">
+					{{ form_start(searchForm) }}
+
+						{{ form_row(searchForm.q) }}
+						<button class="btn btn-toggle align-items-center rounded collapsed p-0 mb-3 col-12" data-bs-toggle="collapse" data-bs-target="#home-collapse1" aria-expanded="true" type="button">
+							<h5 class="fw-bold font-sans-serif m-0"> Categories </h5>
+						</button>
+						<div class="collapse show" id="home-collapse1">
+							{{ form_row(searchForm.categories) }}
+						</div>
+
+						<button class="btn btn-toggle align-items-center rounded collapsed p-0 mb-3 col-12" data-bs-toggle="collapse" data-bs-target="#home-collapse2" aria-expanded="true" type="button">
+							<h5 class="fw-bold font-sans-serif m-0"> Formats </h5>
+						</button>
+						<div class="collapse show" id="home-collapse2">
+							{{ form_row(searchForm.formats) }}
+						</div>
+						<div class="col-12">
+							<button type="submit" class="btn btn-dark">Filtrer</button>
+						</div>
+					{{ form_end(searchForm) }}
+				</div>
+			</div>
+			<div class="col-lg-9 col-12 d-flex flex-wrap">
+				{% if produit is empty %}
+					<h4 class="mx-auto text-center titre fs-5">Aucun produit ne correspond à votre recherche.</h4>
+				{% else %}
+					{% for data in produit %}
+						<div class="col-6 col-md-4 col-xl-3 d-flex p-2">
+							<div id="product-1" class="single-product my-auto">
+								<div class="part-1 grow">
+									<a href=" {{path("fiche_produit", {'id' : data.id})}} "><img src="{{ asset("uploads/photos/" ~ data.photo)}}" class="w-100" alt=""></a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				{% endif %}	
+			</div>
+			<div class="d-flex justify-content-end mb-4 mt-2">
+				{% do produit.setPageRange(2) %}
+				{{ knp_pagination_render(produit) }}
+			</div>
+		</div>
+	</div>
+</section>
+
+
+{% endblock %}

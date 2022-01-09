@@ -1,0 +1,217 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Boots Art | {{produit.titre}}
+{% endblock %}
+
+
+
+
+{% block body %}
+
+<style>
+
+.labl {
+    display : block;
+}
+.labl > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+}
+.labl > input + div{ /* DIV STYLES */
+    cursor:pointer;
+    border: 1px solid grey;
+    border-radius: 4px;
+    padding: 8px;
+}
+.labl > input:checked + div{ /* (RADIO CHECKED) DIV STYLES */
+    outline: 3px solid rgb(32, 140, 228);
+    border-radius: 4px;
+    box-shadow: rgb(32, 140, 228) 0px 2px 8px 0px;
+}
+
+.text-blue{
+    color: rgb(104, 140, 245);
+}
+
+</style>
+
+<div class="container my-5">
+    <div class="row">
+        {% for message in app.flashes('success') %}
+            <div class="col-4 mx-auto text-center bg-success p-3 text-white mb-3 rounded">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <a href="{{ path('produits') }}" class="text-white text-decoration-none my-2"><i class="bi bi-caret-left-fill"></i> Retour vers la boutique</a>
+        <div class="col-12 col-lg-7 mb-2">
+            <div class="card bg-light h-100">
+                {# <div class="card-body d-flex bgProduct growID">
+                    <a href="" class="mx-auto text-center" data-toggle="modal" data-target="#productModal">
+                        <img class="img-fluid imgProduct mt-5" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
+                    </a>
+                </div> #}
+
+                <div id="carousel-fiche-produit" class="carousel slide d-flex flex-wrap h-100">
+                    <div class="col-md-4 col-12 m-0 d-none d-sm-flex d-md-block">
+                        <button type="button" class="active border-0 col-md-12 col-4 mb-2" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
+                            <img class="w-50 mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
+                        </button>
+                        <button type="button" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="1" class=" col-md-12 col-4 border-0" aria-label="Slide 2">
+                            <div class="card-body d-flex bg-carousel-button w-100 p-1">
+                                <img class="img-fluid img-carousel-button mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
+                            </div>
+                        </button>
+                        <button type="button" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="2" class=" col-md-12 col-4 border-0" aria-label="Slide 3">
+                            <div class="card-body d-flex bg-carousel-button-2 w-100 p-1" style="background: url('{{ asset('img/bgProduct2.jpg') }}'); background-size:cover; background-repeat: no-repeat')">
+                                <img class="img-fluid img-carousel-button mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
+                            </div>
+                        </button>
+                    </div>
+                    <div class="col-md-8 col-12 overflow-hidden">
+                        <div class="carousel-item active py-1 h-100">
+                            <img src="{{ asset('uploads/photos/' ~ produit.photo) }}" class="d-block m-auto" id="produit_on_bg" alt="{{ produit.photo }}">
+                        </div>
+                        <div class="carousel-item h-100 py-1">
+                            <div class="card-body d-flex bgProduct rounded my-auto">
+                                <img class="img-fluid imgProduct mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
+                            </div>
+                        </div>
+                        <div class="carousel-item h-100 py-1">
+                            <div class="card-body d-flex bgProduct rounded my-auto"  style="background: url('{{ asset('img/bgProduct2.jpg') }}'); background-size:cover; background-repeat: no-repeat')">
+                                <img class="img-fluid imgProduct mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-5 add_to_cart_block  mb-2">
+            <div class="card bg-light h-100">
+                <div class="card-body">
+                    <p class="fw-bold fs-3 text-center">{{produit.titre}}</p>
+                    <p class="fs-5 text-center mb-2">Posté par : <a class="text-decoration-none" href="{{ path('profil_vendeur', {'id': produit.user.id}) }}"><strong>{{produit.user.pseudo}}</strong></a> </p>
+
+                    <form method="get" action="{{ path('ajout_panier') }}">
+                        <h6 class="mb-2">Choisissez un format :</h6>
+                        <div class="form-group d-flex flex-wrap flex-row justify-content-evenly">  
+                            {% set defaultcheck = true %}
+                            {% for format in produit.format %}
+                                <div class="col-4 p-2">
+                                    <label class="labl col-12">
+                                        <input type="radio" name="format" value="{{format.id}}" {% if defaultcheck == true %} checked="checked" {% endif %}/>
+                                        <div class="text-center">
+                                            <p> Taille : {{format.format}} </p>
+                                            <p> {{format.hauteur}}cm x {{format.largeur}}cm </p>
+                                            <p class="text-blue fs-5 fw-bold"> Prix : {{format.prix}} € </p>
+                                        </div>
+                                    </label>
+                                </div>
+                            {% set defaultcheck = false %}
+                            {% endfor %}                        
+                        </div>
+                        <div class="form-group my-2">
+                            <label>Quantité :</label>
+                            <select name="quantity" class="form-select">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                        <input type="hidden" name="id_produit" value="{{produit.id}}">
+                        <div class="text-center ">
+                            <button type="submit" class="btn btn-success btn-lg text-uppercase">
+                                <i class="fa fa-shopping-cart"></i> Ajouter au panier
+                            </button>
+                        </div>
+                    </form>
+                    <div class="product_rassurance">
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Livraison rapide</li>
+                            <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>paiement sécurisé</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+    <div class="row">
+        {% if sameCategorie|length > 1 %}
+            <h2 class="my-3 titrehome"> Articles similaires </h2>
+            <div id="sameProdSplide" class="splide">
+                <div class="splide__track">
+                    <ul class="splide__list w-100">
+                        {% for sameproduit in sameCategorie %}
+                            {% if sameproduit.id != produit.id %}
+                                <li class="splide__slide mx-1 d-flex align-items-center">
+                                    <a href=" {{path("fiche_produit", {'id' : sameproduit.id})}} ">
+                                        <img src="{{ asset("uploads/photos/" ~ sameproduit.photo)}}" class="" style="width: 250px" alt="">
+                                    </a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="mt-4"> 
+
+        {% set acheter = false %}
+        {# Ici je vérifie si l'utilisateur connecter à déja acheter se produit pour pouvoir le laisser mettre un avis sur le produit #}
+        {% if app.user %}
+            {% for commande in app.user.commandes %}
+                {% for detail in commande.detailsCommandes %}
+                    {% if detail.produitid == produit.id %}
+                        {% set acheter = true %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+        {% if app.user %}
+            {% if acheter == true %}
+                {{ form_start(commentaireForm) }}
+
+                    <p class="text-white"> Commentaire </p>
+                    {{ form_widget(commentaireForm) }}
+
+                    <button class="btn btn-dark">Poster</button>
+
+                 {{ form_end(commentaireForm) }}
+            {% else %}
+
+                <p class="text-center text-white">Vous ne pouvez pas posté de commentaire sur le produit car vous ne l'avez pas acheter</p>
+
+            {% endif %}
+            
+            
+        {% else %}
+
+            <p class="text-secondary">Il vous faut être <a href="{{ path('app_register') }}" class="link-secondary">connecter</a> et avoir acheter le produit pour pouvoir poster un avis.</p>
+            
+        {% endif %}
+
+        <h4 class="titrehome fs-2 my-3">Avis</h4>
+
+        {% if produit.commentaires|length == 0 %}
+            <h6 class="text-center text-white">Aucun avis n'a été poster.</h6>
+        {% else %}
+            {% for commentaire in produit.commentaires %}
+                <div class="bg-light rounded p-2 my-2">
+                    <div class="d-flex justify-content-between">
+                        <p class="fw-bold">{{ commentaire.auteur }}</p>
+                        <p class="float-end">Posté le : {{ commentaire.date|date('d-m-Y') }} à {{ commentaire.date|date('H:i') }}</p>
+                    </div>
+                    <hr class="my-1">
+                    <p>{{commentaire.commentaire}}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

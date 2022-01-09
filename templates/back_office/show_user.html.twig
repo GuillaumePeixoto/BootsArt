@@ -1,0 +1,61 @@
+{% extends "base_backoffice.html.twig" %}
+
+{% block body %}
+
+    <h2 class="text-center my-3">Liste des users</h2>
+    <div  style="overflow-x : scroll;">
+        <table class="table text-center align-middle" id="table-backoffice-user">
+            <thead>
+                <tr>
+                    {% for data in colonnes %}
+                        {% if (data != 'id') and (data != 'password') %}
+                            <th>{{data}}</th>                    
+                        {% endif %}
+
+                    {% endfor %}
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{user.email}}</td>
+                        <td>
+                            {% for role in user.roles %}
+                                {{role}}<br>
+                            {% endfor %}
+                        </td>
+                        <td>{{user.prenom}}</td>
+                        <td>{{user.nom}}</td>
+                        <td>{{user.pseudo}}</td>
+                        <td>{{user.adresse}}</td>
+                        <td>{{user.ville}}</td>
+                        <td>{{user.codePostal}}</td>
+                        <td>
+                            {% if user.imageProfil == null %}
+                                Vide
+                            {% else %}
+                                <img src="{{ asset('uploads/photos/' ~ user.imageProfil) }}" alt="{{user.imageProfil}}" style="width: 100px">
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.banniereProfil == null %}
+                                Vide
+                            {% else %}
+                                <img src="{{ asset('uploads/photos/' ~ user.banniereProfil) }}" alt="{{user.banniereProfil}}" style="width: 100px">
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if user.description == null %}
+                                Vide
+                            {% else %}
+                                {{ user.description }}
+                            {% endif %}
+                        </td>
+                        <td> {% if 'ROLE_VENDEUR' in user.roles %} <a href="{{ path('profil_vendeur', {'id' : user.id }) }}" class="btn bg-success text-white"><i class="bi bi-eye-fill"></i></a>{% endif %} <a href="{{ path('modify_user', {'id' : user.id }) }}" class="btn bg-primary text-white"><i class="bi bi-pencil-square"></i></a> <a class="btn bg-danger text-white" href="{{ path('remove_user', {'id': user.id}) }}"><i class="bi bi-trash"></i></a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

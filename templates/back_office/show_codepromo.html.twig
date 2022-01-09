@@ -1,0 +1,41 @@
+{% extends "base_backoffice.html.twig" %}
+
+{% block body %}
+
+    {% for label, messages in app.flashes(['success', 'danger']) %}
+        {% for message in messages %}
+            <div class="col-6 mx-auto text-center alert alert-{{ label }} my-5">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <h2 class="text-center my-3">Liste des codes promo</h2>
+
+    <table class="table table-striped vertical-border" id="table-backoffice-promo">
+        <thead>
+            <tr>
+                {% for data in colonnes %}
+                    {% if data != 'id' %}
+                        <th class="text-center">{{data|capitalize}}</th>            
+                    {% endif %}
+                {% endfor %}
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for promo in promos %}
+                <tr>
+                    <td class="align-middle text-center">{{ promo.promoCode}}</td>
+                    <td class="align-middle text-center">{{ promo.promoType}}</td>
+                    <td class="align-middle text-center">{{ promo.promoValue}}</td>
+                    <td class="align-middle text-center">{{ promo.dateDebut|date('d-m-Y H:i')}}</td>
+                    <td class="align-middle text-center">{{ promo.dateFin|date('d-m-Y H:i')}}</td>
+                    <td class="align-middle text-center">{{ promo.quantityCondition}}</td>
+                    <td class="text-center"><a href="{{ path('modify_codepromo', {'id' : promo.id }) }}" class="btn bg-primary text-white me-2"><i class="bi bi-pencil-square"></i></a><a class="btn bg-danger text-white" href="{{ path('remove_codepromo', {'id' : promo.id }) }}"><i class="bi bi-trash"></i></a></td>
+                </tr> 
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

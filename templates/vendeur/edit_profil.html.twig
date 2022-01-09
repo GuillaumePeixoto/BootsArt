@@ -1,0 +1,76 @@
+{% extends "base_vendeur.html.twig" %}
+
+{% block title %}
+    Boots Art | Modification du profil
+{% endblock %}
+
+{% block body %}
+
+    <div class="rounded bg-light col-lg-7 col-md-9 col-12 mx-auto p-3 my-5">
+        <h2 class="text-center">Modification du compte</h2>
+
+        {{ form_start(vendeurForm, {'attr': {"class": "col-7 mx-auto"}}) }}
+
+            <div class="col-12" id="add_photo_profil">
+                {{ form_row(vendeurForm.imageProfil) }}   
+            </div>
+            <div class="d-flex flex-wrap">
+                <div class="col-md-6 col-10 mx-auto my-3 text-center p-2 " id="block-profil-preview">
+                    <h4 class="text-center"> Prévisualisation :</h4>
+                    <img id="profil-preview" class="col-lg-6 col-md-8 col-10 rounded-circle">
+                </div>
+
+                {% if photoBdd is not empty %}
+                    <div class="p-2 text-center col-md-6 col-10 mx-auto my-3">
+                        <h4>Photo Actuelle :</h4>
+                        <img src="{{ asset('uploads/photos/' ~ photoBdd) }}"  class="col-lg-6 col-md-8 col-10 rounded-circle" alt="{{ photoBdd }}">
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-12" id="add_photo_banniere">
+                {{ form_row(vendeurForm.banniereProfil) }}   
+            </div>
+           <div class="d-flex flex-wrap">
+                <div class="col-12 mx-auto my-3 text-center p-2 " id="block-banniere-preview">
+                    <h4 class="text-center"> Prévisualisation :</h4>
+                    <img id="banniere-preview" class="col-lg-12">
+                </div>
+
+                {% if banniereBdd is not empty %}
+                    <div class="p-2 text-center col-12 mx-auto my-3">
+                        <h4>Photo Actuelle :</h4>
+                        <img src="{{ asset('uploads/photos/' ~ banniereBdd) }}"  class="col-12" alt="{{ banniereBdd }}">
+                    </div>
+                {% endif %}
+            </div>
+
+            {{ form_row(vendeurForm.description) }}
+
+            {{ form_row(vendeurForm.pseudo) }}
+
+            {{ form_row(vendeurForm.email) }}
+
+            {{ form_row(vendeurForm.prenom) }}
+
+            {{ form_row(vendeurForm.nom) }}
+
+            <div class="col-12 d-flex flex-wrap">
+                <div class="col-lg-7 col-12 px-lg-1">
+                    {{ form_row(vendeurForm.adresse) }}
+                </div>
+                <div class="col-lg-3 col-12 px-lg-1">
+                    {{ form_row(vendeurForm.ville) }}
+                </div>
+                <div class="col-lg-2 col-12 px-lg-1">
+                    {{ form_row(vendeurForm.codePostal) }}    
+                </div>               
+
+            </div>
+
+            <button type="submit" class="btn btn-dark">Continuer</button>
+        {{ form_end(vendeurForm) }}
+
+    </div>
+
+{% endblock %}

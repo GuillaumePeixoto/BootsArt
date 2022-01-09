@@ -1,0 +1,46 @@
+{% extends "base_vendeur.html.twig" %}
+
+{% block title %}Boots Art | Ajout d'un produit{% endblock %}
+
+{% block body %}
+
+    <div class="rounded bg-light col-lg-7 col-md-9 col-12 mx-auto p-3 my-5">
+        <h2 class="text-center">{{action}} du produit</h2>
+
+        {{ form_start(produitForm) }}
+
+            {% if action == 'Ajout' %}
+                <div class="col-12" id="add_photo">
+                    {{ form_row(produitForm.photo) }}   
+                </div>
+                <div class="col-lg-6 col-md-8 col-10 mx-auto my-3" id="block-preview">
+                    <h4 class="text-center"> Prévisualisation de l'image :</h4>
+                    <img id="file-preview" class="w-100">
+                </div>
+            {% endif %}
+
+            {% if photoActuel is not empty %}
+            <div class="p-2 text-center">
+                <h3>Photo Actuelle</h3>
+                <img src="{{ asset('uploads/photos/' ~ photoActuel) }}"  class="col-lg-4 col-md-8 col-10" alt="photoActuel">
+            </div>
+            {% endif %}
+
+            {{ form_row(produitForm.titre) }}
+
+            {{ form_row(produitForm.description) }}
+            <div id="checkbox_form_vendeur">
+
+                {{ form_row(produitForm.categorie) }}
+
+                {{ form_row(produitForm.format) }}
+
+            </div>
+
+
+
+            <button type="submit" class="btn btn-dark">Continuer</button>
+        {{ form_end(produitForm) }}
+    </div>
+
+{% endblock %}

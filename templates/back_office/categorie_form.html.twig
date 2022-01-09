@@ -1,0 +1,11 @@
+{% extends "base_backoffice.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center my-3">{{ action }} de categorie</h1>
+        {{ form_start(categorieForm) }}
+            {{ form_row(categorieForm.titre) }}
+            <button class="btn btn-primary">{{action}}</button>
+        {{ form_end(categorieForm)}}
+    </div>
+{% endblock %}

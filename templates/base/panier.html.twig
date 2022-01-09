@@ -1,0 +1,101 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Boots Arts | Panier
+{% endblock %}
+
+{% block body %}
+<div class="bodypanier">
+    <div class="container py-4">
+        {% if panier is not empty %}
+            <a href="{{ path('produits') }}" class="text-white text-decoration-none my-2"><i class="bi bi-caret-left-fill"></i> Retour vers la boutique</a>
+            <div class="d-flex flex-wrap">
+                <div class="col-lg-8 col-12 p-1">
+                    {% set total = 0 %}
+                    {% set total_article = 0 %}
+                    {% for key, produit in panier %}
+                        <div class="bg-light p-2 d-flex flex-wrap my-2">
+                            <div class="col-md-3 col-12 text-center">
+                                <img src="{{ asset('uploads/photos/' ~ produit.produit.photo) }}" class="col-8 col-md-12 mx-auto" alt="test">
+                            </div>
+                            <div class="col-md-5 col-6 d-flex align-items-center">
+                                <div class="ms-2">
+                                    <p class="fs-4 fw-bold">{{ produit.produit.titre }}</p>
+                                    <p><strong>Taille : </strong> {{produit.format.format}} ( {{produit.format.hauteur}}cm x {{produit.format.largeur}}cm ) </p>
+                                    <p><strong>Quantité :</strong> {{produit.quantite}}</p>
+                                    <a href="{{ path('remove', {'id' : key }) }}" class="btn btn-dark mt-2">Supprimer</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-6 d-flex align-items-center justify-content-end">
+                                <p class="fw-bold fs-4">Prix unitaire : {{produit.format.prix}} €</p>
+                            </div>
+                        </div>  
+                    {% set total = total + (produit.format.prix * produit.quantite) %}
+                    {% set total_article = total_article + produit.quantite %} 
+                    {% endfor %}
+                    
+                </div>
+                <div class="col-lg-4 col-12 p-1">
+                    <div class="bg-light p-2 my-2">
+                        <h3 class="text-center fw-bold">Total</h3>
+                        <p class="fs-5 my-1">Nombre d'article(s) : <span class="float-end"> {{total_article}}</span></p>
+                        <p class="fs-5 my-1">Total :<span class="float-end {% if reduction is not empty %} text-decoration-line-through {% endif %}"> {{total}}  € </span></p>
+
+                        {% if reduction is not empty %}
+                            {% if reduction.promoType == 'Pourcentage' %}
+                                <p class="fs-5 my-1"> Nouveau total après promotion : <span class="float-end"> {{ total - total * (reduction.promoValue / 100) }} € </span> </p>
+                                <p class="fs-6 my-1">Code utilisé : {{ reduction.promoCode }}</p>
+                            {% else %}
+                                <p class="fs-5 my-1"> Nouveau total après promotion : <span class="float-end">  {{ total - reduction.promoValue }} €  </span></p>
+                                <p class="fs-6 my-1">Code utilisé : {{ reduction.promoCode }}</p>
+                            {% endif %}
+
+                        {% endif %}
+
+                        {% if app.user %}
+
+                            <a href="{{ path('validatePanier') }}" class="w-100 btn btn-primary my-1">Valider le panier</a>
+
+                            {{ form_start(promoForm) }}
+                                {% for label, messages in app.flashes(['success', 'danger']) %}
+                                    {% for message in messages %}
+                                        <div class="col-10 mx-auto text-center alert alert-{{ label }} my-1">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endfor %}
+                                {{ form_row(promoForm.promoCode) }}
+
+                                <button class="btn btn-primary">Ajouter</button>
+                            {{ form_end(promoForm)}}
+                            
+                        {% else %}
+                            <h6 class="text-center">Connectez-vous ou créez-vous un compte</h6>
+                            <div class="d-flex flex-wrap justify-content-evenly">
+                                <a href="{{ path('app_login') }}" class="col-5 btn btn-primary my-1">Se connecter</a>
+                                <a href="{{ path('app_register') }}" class="col-5 btn btn-secondary my-1">S'inscrire</a>
+                            </div>
+                            
+                        {% endif %}
+
+                        <div class="product_rassurance">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Livraison rapide</li>
+                                <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>paiement sécurisé</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="mt-5">
+                <h3 class="text-white text-center">Votre panier est vide</h3>
+                <div class="text-center">
+                    <a href="{{ path('produits') }}" class="text-white mt-2">Lien vers la boutique</a>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

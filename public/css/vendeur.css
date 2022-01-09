@@ -1,0 +1,60 @@
+
+.hover_effect{
+    padding: 10px;
+    position:relative;
+    border: none !important;
+    outline: none;
+}
+
+.hover_effect:before{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    content: '';
+    width: 0%;
+    height: 2px;
+    background-color: #c49a52;
+    transition: 0.3s;
+}
+
+.hover_effect:hover{
+    color: #c49a52 !important;
+}
+
+.hover_effect:hover:before{
+    width: 100%;
+}
+
+.badge-perso{
+    background-color: rgb(18, 155, 235);
+    border-radius: 8px;
+    font-size: 13px;
+    color: white;
+    font-weight: 700;
+}
+
+#file-preview, #block-preview, #block-profil-preview, #block-banniere-preview{
+    display: none;
+}
+
+#checkbox_form_vendeur #produit_form_categorie, #checkbox_form_vendeur #produit_form_format{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+#checkbox_form_vendeur .form-check{
+    width: 20%;
+}
+
+@media screen and (max-width: 992px){
+    #checkbox_form_vendeur .form-check{
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 450px){
+    #checkbox_form_vendeur .form-check{
+        width: 33%;
+    }
+}

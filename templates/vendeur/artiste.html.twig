@@ -1,0 +1,70 @@
+{% extends "base_vendeur.html.twig" %}
+
+{% block title %}
+    Boots Art | Mon profil
+{% endblock %}
+
+{% block body %}
+
+<div class="row py-5 px-4 ">
+    <div class="col-md-10 mx-auto">
+        <!-- Profile widget -->
+        {% if app.user.banniereProfil is null %}
+            {% set banniere = asset('img/banniere-default.png') %}
+        {% else %}
+            {% set banniere = asset('uploads/photos/' ~ app.user.banniereProfil) %}
+        {% endif %}
+        <div class="bg-white shadow rounded overflow-hidden">
+            <div class="p-4 align-items-center d-flex cover" style="background: url('{{ banniere }}'); background-size: cover;">
+                <div class="media align-items-end profile-head">
+                    <div class="profile mr-3 ">
+                        {% if app.user.imageProfil is null %}
+                            <img src="{{ asset('img/default-image-profil.png') }}" alt="default" width="220" class="rounded mb-1 img-thumbnail">
+                        {% else %}
+                            <img src="{{ asset('uploads/photos/' ~ app.user.imageProfil) }}" alt="..." width="220" class="rounded mb-1 img-thumbnail">
+                        {% endif %} 
+                    </div>
+                    <div class="media-body text-white">
+                        <h4 class="mt-0 mb-0">{{ app.user.pseudo }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-light p-4 d-flex justify-content-end text-center">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <h5 class="font-weight-bold mb-0 d-block">{{ app.user.produits|length }}</h5><small class="text-muted"> <i class="fas fa-image mr-1"></i>Photos</small>
+                    </li>
+                </ul>
+            </div>
+            <div class="px-4 py-3">
+                <h5 class="">À Propos :</h5>
+                <div class="p-4 rounded shadow-sm bg-light">
+                    <p class="p-0 m-0"> {{ app.user.description }} </p>
+                </div>
+            </div>
+            <div class="py-4 px-4">
+                <div class="mb-3">
+                    <h5 class="mb-0">Travaux Récent :</h5>
+                </div>
+                <div class="d-flex justify-content-evenly flex-wrap">
+                    {% for produit in app.user.produits|reverse %}
+                        <div class="col-xl-3 col-lg-4 col-sm-6 col-10 p-2">
+                            <div class="card shadow-sm bg-light align-self-stretch h-100">
+                                <div class="p-2 h-100 d-flex">
+                                    <img src="{{ asset('uploads/photos/' ~ produit.photo) }}" class="w-100 my-auto" alt="naruto-sasuke">
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <a class="text-center m-0 p-0 text-decoration-none text-black stretched-link d-block" href="{{ path('fiche_produit', {'id' : produit.id}) }}">{{ produit.titre }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+{% endblock %}

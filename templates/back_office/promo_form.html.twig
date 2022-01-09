@@ -1,0 +1,17 @@
+{% extends "base_backoffice.html.twig" %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center my-3">{{ action }} du code promo</h1>
+        {{ form_start(codepromoForm) }}
+            {{ form_row(codepromoForm.promoCode) }}
+            {{ form_row(codepromoForm.promoType) }}
+            {{ form_row(codepromoForm.promoValue) }}
+            {{ form_row(codepromoForm.quantityCondition) }}
+            {{ form_row(codepromoForm.dateDebut) }}
+            {{ form_row(codepromoForm.dateFin) }}
+            {# <input type="datetime-local" name="debut_promo_code"> #}
+            <button class="btn btn-primary">{{action}}</button>
+        {{ form_end(codepromoForm)}}
+    </div>
+{% endblock %}
