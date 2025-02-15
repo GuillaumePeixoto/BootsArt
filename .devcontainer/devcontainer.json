@@ -7,7 +7,16 @@
 	],
 	"service": "app",
 	"workspaceFolder": "/var/www/html",
-	"forwardPorts": [8080, 8000, 3307]
+	"forwardPorts": [8080, 8000],
+	"portsAttributes": {
+		"8000": {
+		"label": "Site"
+		},
+		"8080": {
+		"label": "PhpMyAdmin"
+		}
+	}
+	  
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
