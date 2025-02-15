@@ -4,6 +4,7 @@ FROM php:8.1-fpm-alpine
 # Met à jour les paquets et installe les dépendances nécessaires pour pdo_mysql
 RUN apk update && \
     apk add --no-cache git mariadb-dev && \
+    apk add --no-cache git openssh && \
     docker-php-ext-install pdo pdo_mysql
 
 # Installer les autres extensions PHP que tu pourrais avoir besoin

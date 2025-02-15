@@ -7,6 +7,7 @@ services:
     }
     volumes:
       - ../:/var/www/html  # On remonte d'un niveau pour accéder au projet
+      - ~/.ssh:/root/.ssh:ro
     command: >
       sh -c "(command -v apt-get >/dev/null 2>&1 && \
             apt-get update && apt-get install -y unzip curl default-mysql-client) || \
@@ -15,6 +16,7 @@ services:
           curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
           chmod -R 777 /var/www/html &&
           docker-php-ext-install pdo pdo_mysql &&
+          eval $(ssh-agent -s) && ssh-add ~/.ssh/id_rsa || true &&
           php-fpm"
 
   web:
