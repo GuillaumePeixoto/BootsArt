@@ -34,6 +34,23 @@
     color: rgb(104, 140, 245);
 }
 
+.background-light-black{
+    background: #1e1e1f !important;
+    color: #CCCCCC !important
+}
+
+.padding-button{
+    padding: 2.5px 5px;
+}
+
+.auteur, .auteur:hover{
+    color: #edaa2f;
+}
+
+.prix{
+    color: rgb(219 209 127);
+}
+
 </style>
 
 <div class="container my-5">
@@ -46,7 +63,7 @@
 
         <a href="{{ path('produits') }}" class="text-white text-decoration-none my-2"><i class="bi bi-caret-left-fill"></i> Retour vers la boutique</a>
         <div class="col-12 col-lg-7 mb-2">
-            <div class="card bg-light h-100">
+            <div class=" h-100 background-light-black">
                 {# <div class="card-body d-flex bgProduct growID">
                     <a href="" class="mx-auto text-center" data-toggle="modal" data-target="#productModal">
                         <img class="img-fluid imgProduct mt-5" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
@@ -54,31 +71,31 @@
                 </div> #}
 
                 <div id="carousel-fiche-produit" class="carousel slide d-flex flex-wrap h-100">
-                    <div class="col-md-4 col-12 m-0 d-none d-sm-flex d-md-block">
-                        <button type="button" class="active border-0 col-md-12 col-4 mb-2" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
+                    <div class="col-md-4 col-12 m-0 d-none d-sm-flex d-md-block background-light-black">
+                        <button type="button" class="active border-0 col-md-12 col-4 background-light-black padding-button" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="0" aria-current="true" aria-label="Slide 1">
                             <img class="w-50 mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
                         </button>
-                        <button type="button" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="1" class=" col-md-12 col-4 border-0" aria-label="Slide 2">
+                        <button type="button" class=" col-md-12 col-4 border-0 background-light-black padding-button" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="1"  aria-label="Slide 2">
                             <div class="card-body d-flex bg-carousel-button w-100 p-1">
                                 <img class="img-fluid img-carousel-button mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
                             </div>
                         </button>
-                        <button type="button" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="2" class=" col-md-12 col-4 border-0" aria-label="Slide 3">
+                        <button type="button" class=" col-md-12 col-4 border-0 background-light-black padding-button" data-bs-target="#carousel-fiche-produit" data-bs-slide-to="2" aria-label="Slide 3">
                             <div class="card-body d-flex bg-carousel-button-2 w-100 p-1" style="background: url('{{ asset('img/bgProduct2.jpg') }}'); background-size:cover; background-repeat: no-repeat')">
                                 <img class="img-fluid img-carousel-button mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
                             </div>
                         </button>
                     </div>
                     <div class="col-md-8 col-12 overflow-hidden">
-                        <div class="carousel-item active py-1 h-100">
+                        <div class="carousel-item active p-1 h-100">
                             <img src="{{ asset('uploads/photos/' ~ produit.photo) }}" class="d-block m-auto" id="produit_on_bg" alt="{{ produit.photo }}">
                         </div>
-                        <div class="carousel-item h-100 py-1">
+                        <div class="carousel-item h-100 p-1">
                             <div class="card-body d-flex bgProduct rounded my-auto">
                                 <img class="img-fluid imgProduct mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
                             </div>
                         </div>
-                        <div class="carousel-item h-100 py-1">
+                        <div class="carousel-item h-100 p-1">
                             <div class="card-body d-flex bgProduct rounded my-auto"  style="background: url('{{ asset('img/bgProduct2.jpg') }}'); background-size:cover; background-repeat: no-repeat')">
                                 <img class="img-fluid imgProduct mt-1 mx-auto" src="{{ asset('uploads/photos/' ~ produit.photo) }}">
                             </div>
@@ -89,12 +106,12 @@
         </div>
 
         <div class="col-12 col-lg-5 add_to_cart_block  mb-2">
-            <div class="card bg-light h-100">
+            <div class="card h-100 background-light-black">
                 <div class="card-body">
                     <p class="fw-bold fs-3 text-center">{{produit.titre}}</p>
-                    <p class="fs-5 text-center mb-2">Posté par : <a class="text-decoration-none" href="{{ path('profil_vendeur', {'id': produit.user.id}) }}"><strong>{{produit.user.pseudo}}</strong></a> </p>
+                    <p class="fs-5 text-center mb-2">Posté par : <a class="text-decoration-none auteur" href="{{ path('profil_vendeur', {'id': produit.user.id}) }}"><strong>{{produit.user.pseudo}}</strong></a> </p>
 
-                    <form method="get" action="{{ path('ajout_panier') }}">
+                    <form class="pt-2" method="get" action="{{ path('ajout_panier') }}">
                         <h6 class="mb-2">Choisissez un format :</h6>
                         <div class="form-group d-flex flex-wrap flex-row justify-content-evenly">  
                             {% set defaultcheck = true %}
@@ -105,7 +122,7 @@
                                         <div class="text-center">
                                             <p> Taille : {{format.format}} </p>
                                             <p> {{format.hauteur}}cm x {{format.largeur}}cm </p>
-                                            <p class="text-blue fs-5 fw-bold"> Prix : {{format.prix}} € </p>
+                                            <p class="fs-5 fw-bold prix"> Prix : {{format.prix}} € </p>
                                         </div>
                                     </label>
                                 </div>
@@ -114,7 +131,7 @@
                         </div>
                         <div class="form-group my-2">
                             <label>Quantité :</label>
-                            <select name="quantity" class="form-select">
+                            <select name="quantity" class="form-select background-light-black">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -124,17 +141,11 @@
                         </div>
                         <input type="hidden" name="id_produit" value="{{produit.id}}">
                         <div class="text-center ">
-                            <button type="submit" class="btn btn-success btn-lg text-uppercase">
+                            <button type="submit" class="btn btn-success btn-lg">
                                 <i class="fa fa-shopping-cart"></i> Ajouter au panier
                             </button>
                         </div>
                     </form>
-                    <div class="product_rassurance">
-                        <ul class="list-inline">
-                            <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Livraison rapide</li>
-                            <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>paiement sécurisé</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>  
