@@ -10,6 +10,11 @@ RUN apk update && \
 # Installer les autres extensions PHP que tu pourrais avoir besoin
 RUN docker-php-ext-install mysqli
 
+# Ajout XDebug
+RUN apk add --no-cache autoconf g++ make linux-headers \
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 # Copier ton code source (si nécessaire)
 COPY . /var/www/html/
 

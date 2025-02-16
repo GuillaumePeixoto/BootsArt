@@ -15,6 +15,16 @@
 		"8080": {
 		"label": "PhpMyAdmin"
 		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-vscode.vscode-typescript-next",
+				"bmewburn.vscode-intelephense-client",
+				"xdebug.php-debug",
+				"devsense.phptools-vscode"
+			]
+		}
 	}
 	  
 	// Features to add to the dev container. More info: https://containers.dev/features.
