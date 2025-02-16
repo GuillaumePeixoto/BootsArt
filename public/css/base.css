@@ -4,78 +4,23 @@
     width: 375px;
 }
 
-@media(max-width: 1400px){
-    .bgProduct{
-        height: 425px !important;
-    }
-
-    .imgProduct{
-        height: 180px !important;
-    }
+.testtest{
+    color: white;
 }
 
-@media(max-width: 1200px){
-    .bgProduct{
-        height: 360px !important;
-    }
-
-    .imgProduct{
-        height: 160px !important;
-    }
-
-    #produit_on_bg{
-        width: 350px;
-    }
-
-    .bg-carousel-button{
-        height: 160px !important;
-    }
-    
-    .img-carousel-button{
-        height: 75px !important;
-    }
+.background-light-black{
+    background: #1e1e1f;
+    color: #CCCCCC;
 }
 
-@media(max-width: 992px){
-    .bgProduct{
-        height: 425px !important;
-    }
-
-    .imgProduct{
-        height: 200px !important;
-    }
-
-    #produit_on_bg{
-        width: 380px;
-    }
-
-    .bg-carousel-button{
-        height: 220px !important;
-    }
-    
-    .img-carousel-button{
-        height: 100px !important;
-    }
+.font-light-gold{
+    color: rgb(219 209 127) ;
 }
 
-@media(max-width: 768px){
-    .bgProduct{
-        height: 515px !important;
-    }
-
-    .imgProduct{
-        height: 235px !important;
-    }
-
-    .bg-carousel-button{
-        height: 160px !important;
-    }
-    
-    .img-carousel-button{
-        height: 75px !important;
-    }
+.background-light-gold{
+    background: rgb(219 209 127);
+    color: #1e1e1f ;
 }
-
 
 .bgProduct{
     background-image: url(https://www.murs-3d.fr/3168-thickbox_default/planche-de-bois-vieilli.jpg);
@@ -113,6 +58,13 @@
     text-align: center;
     font-weight: bold;
     font-size: 150%;
+}
+
+.container-card-block {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .selectFormat{
@@ -167,6 +119,11 @@
     background-color: #e8e8e8 !important;
 }
 
+a.titre-produit, a.titre-produit:hover{
+    color: #CCCCCC;
+    text-decoration: none;
+}
+
 /* Profil */
 
 .fontTD{
@@ -183,7 +140,79 @@
 
 /* Responsive */
 
+@media(max-width: 1400px){
+    .bgProduct{
+        height: 425px !important;
+    }
+
+    .imgProduct{
+        height: 180px !important;
+    }
+}
+
+@media(max-width: 1200px){
+    .bgProduct{
+        height: 360px !important;
+    }
+
+    .imgProduct{
+        height: 160px !important;
+    }
+
+    #produit_on_bg{
+        width: 350px;
+    }
+
+    .bg-carousel-button{
+        height: 160px !important;
+    }
+    
+    .img-carousel-button{
+        height: 75px !important;
+    }
+}
+
+@media(max-width: 992px){
+    .bgProduct{
+        height: 425px !important;
+    }
+
+    .imgProduct{
+        height: 200px !important;
+    }
+
+    #produit_on_bg{
+        width: 380px;
+    }
+
+    .bg-carousel-button{
+        height: 220px !important;
+    }
+    
+    .img-carousel-button{
+        height: 100px !important;
+    }
+}
+
+
 @media(max-width: 768px){
+
+    .bgProduct{
+        height: 515px !important;
+    }
+
+    .imgProduct{
+        height: 235px !important;
+    }
+
+    .bg-carousel-button{
+        height: 160px !important;
+    }
+    
+    .img-carousel-button{
+        height: 75px !important;
+    }
+
     .img_profil{
         height: 200px !important;
         width: 200px !important;
@@ -277,7 +306,7 @@ border: none;
 }
 
 .under-menu a{
-color: white;
+    color: white;
 }
 
 .column a {

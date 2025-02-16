@@ -34,16 +34,6 @@
     color: rgb(104, 140, 245);
 }
 
-.background-light-black{
-    background: #1e1e1f !important;
-    color: #CCCCCC !important
-}
-
-.background-light-gold{
-    background: rgb(219 209 127);
-    color: #1e1e1f ;
-}
-
 .button-preview button{
     padding: 2.5px 5px;
 }
@@ -82,10 +72,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.card-block {
-    
 }
 
 </style>
@@ -201,7 +187,7 @@
                         {% for sameproduit in sameCategorie %}
                             {% if sameproduit.id != produit.id %}
                                 <li class="splide__slide mx-1 d-flex align-items-center">
-                                    <a href=" {{path("fiche_produit", {'id' : sameproduit.id})}} ">
+                                    <a href="{{path("fiche_produit", {'id' : sameproduit.id})}} ">
                                         <img src="{{ asset("uploads/photos/" ~ sameproduit.photo)}}" class="" style="width: 250px" alt="">
                                     </a>
                                 </li>
