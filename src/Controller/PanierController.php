@@ -6,6 +6,7 @@ use App\Entity\Commande;
 use App\Entity\DetailsCommande;
 use App\Entity\Produit;
 use App\Repository\FormatRepository;
+use App\Service\PanierHelper;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -15,6 +16,7 @@ use App\Repository\PromoRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\TextUI\Command;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class PanierController extends AbstractController
 {
@@ -62,6 +64,51 @@ class PanierController extends AbstractController
         $session->set('panier', $panier);
         return $this->redirectToRoute("panier");
     }
+
+    /**
+     * @Route("/panier/update", name="cart_update", methods={"POST"})
+     */
+    public function updateCart(Request $request, SessionInterface $session, PanierHelper $panierHelper): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $panier = $session->get('panier', []);
+
+        if (!isset($data['key'], $data['action'])) {
+            return $this->json(['success' => false], 400);
+        }
+
+        $key = intval($data['key']);
+
+        if (!isset($panier[$key])) {
+            return $this->json(['success' => false, 'message' => 'Article non trouvé']);
+        }
+
+        if ($data['action'] === 'increase') {
+            $panier[$key]['quantite']++;
+        } elseif ($data['action'] === 'decrease') {
+            if ($panier[$key]['quantite'] > 1) {
+                $panier[$key]['quantite']--;
+            } else {
+                unset($panier[$key]); // Supprime si quantité < 1
+            }
+        }
+
+        $session->set('panier', $panier);
+
+        $totalPrice = $panierHelper->totalPrixPanier($session);
+        $newQuantite = !empty($panier[$key]['quantite']) ? $panier[$key]['quantite'] : 0;
+        $newPrixQuantite = !empty($panier[$key]['quantite']) ? ($panier[$key]['quantite'] * $panier[$key]['format']->getPrix()) : 0;
+        $newTotalQuantite = $panierHelper->totalQuantitePanier($session);
+
+        return $this->json([
+            'success' => true,
+            'newQuantite' => $newQuantite,
+            'newPrixQuantite' => $newPrixQuantite,
+            'totalPanier' => $totalPrice,
+            'newTotalQuantite' => $newTotalQuantite
+        ]);
+    }
+
 
     /**
      * @Route("/remove/{id}", name="remove")

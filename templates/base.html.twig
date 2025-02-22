@@ -119,7 +119,7 @@
                                     {% set total_article = total_article + produit.quantite %} 
                                 {% endfor %}
                                 {% if panier|length > 0 %}
-                                    <span class="bg-golden rounded p-1 text-white">{{total_article}}</span>
+                                    <span id="quantite-navbar" class="bg-golden rounded p-1 text-white">{{total_article}}</span>
                                 {% endif %}
                             </a>
                         </li>

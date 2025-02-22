@@ -10,7 +10,7 @@
 
 .background-light-black{
     background: #1e1e1f;
-    color: #CCCCCC;
+    color: #e1e1e1;
 }
 
 .font-light-gold{
@@ -120,8 +120,60 @@
 }
 
 a.titre-produit, a.titre-produit:hover{
-    color: #CCCCCC;
+    color: #e1e1e1;
     text-decoration: none;
+}
+
+.update-cart{
+    background-color: rgb(219, 209, 127);
+    color: #1e1e1f;
+    border: none;
+    font-weight: bold;
+    padding: 4px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.update-cart:hover {
+    background-color: rgba(219, 209, 127, 0.8);
+}
+
+.promo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espacement entre les éléments */
+    border-bottom: 2px solid rgb(219, 209, 127); /* Trait en bas */
+    padding: 5px;
+    padding-top: 20px;
+}
+
+.custom-input, .custom-input:active, .custom-input:focus  {
+    flex: 1; /* Prend tout l'espace disponible */
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+}
+
+.custom-input::placeholder {
+    color: rgba(255, 255, 255, 0.5); /* Placeholder en blanc semi-transparent */
+}
+
+.apply-btn {
+    background: none;
+    border: none;
+    color: rgb(219, 209, 127);
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.apply-btn:hover {
+    text-decoration: underline;
 }
 
 /* Profil */

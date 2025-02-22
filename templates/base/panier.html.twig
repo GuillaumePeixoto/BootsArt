@@ -14,7 +14,7 @@
                     {% set total = 0 %}
                     {% set total_article = 0 %}
                     {% for key, item in panier %}
-                        <div class="p-2 d-flex flex-wrap my-2 background-light-black">
+                        <div id="bloc-produit-{{ key }}" class="p-2 d-flex flex-wrap my-2 background-light-black rounded-1">
                             <div class="col-md-3 col-12 text-center">
                                 <a href="{{path("fiche_produit", {'id' : item.produit.id})}} ">
                                     <img src="{{ asset('uploads/photos/' ~ item.produit.photo) }}" class="col-8 col-md-12 mx-auto" alt="test">
@@ -24,15 +24,22 @@
                                 <div class="ms-3">
                                     <p class="fs-4 fw-bold py-2"><a class="titre-produit" href="{{path("fiche_produit", {'id' : item.produit.id})}} ">{{ item.produit.titre }}</a></p>
                                     <p><strong>Taille : </strong> {{item.format.format}} ( {{item.format.hauteur}}cm x {{item.format.largeur}}cm ) </p>
-                                    <p><strong>Quantité :</strong> {{item.quantite}}</p>
+                                    <p><strong>Quantité :</strong></p>
+                                    <div>
+                                        <button class="update-cart increase-button" data-key="{{ key }}" data-action="increase">+</button>
+                                        <span id="quantity-{{ key }}">{{item.quantite}}</span>
+                                        <button class="update-cart decrease-button" data-key="{{ key }}" data-action="decrease">-</button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-6 container-card-block">
-                                <div class="text-end fs-4 fw-bold py-2">
-                                    <a class="fs-4 fw-bold titre-produit" href="{{ path('remove', {'id' : key }) }}" class="mt-2"><i class="bi bi-trash"></i></a>
-                                </div>
-                                <div class="text-end">
-                                    <p class="fw-bold fs-4">Prix unitaire : {{item.format.prix}} €</p>
+                            <div class="col-md-4 col-6">
+                                <div class="container-card-block me-2">
+                                    <div class="text-end fs-4 fw-bold py-2">
+                                        <a class="fs-4 fw-bold titre-produit" href="{{ path('remove', {'id' : key }) }}" class="mt-2"><i class="bi bi-trash"></i></a>
+                                    </div>
+                                    <div class="text-end">
+                                        <p id="prix-quantite-item-{{ key }}" class="fw-bold fs-4">Prix : {{ item.format.prix * item.quantite }} €</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>  
@@ -42,10 +49,10 @@
                     
                 </div>
                 <div class="col-lg-4 col-12 p-1">
-                    <div class="bg-light p-2 my-2">
-                        <h3 class="text-center fw-bold">Total</h3>
-                        <p class="fs-5 my-1">Nombre d'article(s) : <span class="float-end"> {{total_article}}</span></p>
-                        <p class="fs-5 my-1">Total :<span class="float-end {% if reduction is not empty %} text-decoration-line-through {% endif %}"> {{total}}  € </span></p>
+                    <div class="p-3 my-2 background-light-black rounded-1">
+                        <h3 class="text-center fw-bold mb-3">Total</h3>
+                        <p class="fs-5 my-1">Nombre d'article(s) : <span id="total-quantite" class="float-end"> {{total_article}}</span></p>
+                        <p class="fs-5 my-1">Total :<span id="total-prix" class="float-end {% if reduction is not empty %} text-decoration-line-through {% endif %}"> {{total}}  € </span></p>
 
                         {% if reduction is not empty %}
                             {% if reduction.promoType == 'Pourcentage' %}
@@ -60,7 +67,7 @@
 
                         {% if app.user %}
 
-                            <a href="{{ path('validatePanier') }}" class="w-100 btn btn-primary my-1">Valider le panier</a>
+                            <a href="{{ path('validatePanier') }}" class="w-100 mt-3 mb-1 btn background-light-gold">Valider le panier</a>
 
                             {{ form_start(promoForm) }}
                                 {% for label, messages in app.flashes(['success', 'danger']) %}
@@ -70,9 +77,13 @@
                                         </div>
                                     {% endfor %}
                                 {% endfor %}
-                                {{ form_row(promoForm.promoCode) }}
 
-                                <button class="btn btn-primary">Ajouter</button>
+                                <div class="promo-container">
+                                    <p class="font-light-gold">Code promo : </p>
+                                    {{ form_widget(promoForm.promoCode, {'attr': {'class': 'custom-input'}}) }}
+                                    <button class="apply-btn">Appliquer</button>
+                                </div>
+                                
                             {{ form_end(promoForm)}}
                             
                         {% else %}
@@ -83,13 +94,6 @@
                             </div>
                             
                         {% endif %}
-
-                        <div class="product_rassurance">
-                            <ul class="list-inline">
-                                <li class="list-inline-item"><i class="fa fa-truck fa-2x"></i><br/>Livraison rapide</li>
-                                <li class="list-inline-item"><i class="fa fa-credit-card fa-2x"></i><br/>paiement sécurisé</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -104,4 +108,65 @@
 
     </div>
 </div>
+
+<script>
+
+    document.querySelectorAll(".update-cart").forEach(button => {
+        button.addEventListener("click", function () {
+            const key = this.dataset.key;
+            const action = this.dataset.action;
+
+            fetch("/panier/update", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Requested-With": "XMLHttpRequest"
+                },
+                body: JSON.stringify({ key: key, action: action })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateQuantityViewNavBar(data.newTotalQuantite);
+                    updateTotalQuantite(data.newTotalQuantite);
+                    if(data.newQuantite > 0){
+                        updateQuantityView(key, data.newQuantite);
+                        updateProductPrice(key, data.newPrixQuantite);
+                        updateTotalPrice(data.totalPanier);
+                    }else{
+                        deleteBlocProduit(key);
+                    }
+                    
+                }
+            });
+        });
+    });
+
+
+    function updateQuantityView(key, newQuantity) {
+        document.querySelector('#quantity-'+key).textContent = newQuantity;
+    }
+
+    function updateProductPrice(key, newPrice) {
+        document.querySelector('#prix-quantite-item-'+key).textContent = "Prix : "+newPrice + " €";
+    }
+
+    function updateTotalPrice(newTotal) {
+        document.querySelector("#total-prix").textContent = newTotal + " €";
+    }
+
+    function updateTotalQuantite(newTotalQuantite) {
+        document.querySelector("#total-quantite").textContent = newTotalQuantite;
+    }
+
+    function updateQuantityViewNavBar(newQuantity) {
+        document.querySelector('#quantite-navbar').textContent = newQuantity;
+    }
+
+    function deleteBlocProduit(key){
+        document.querySelector('#bloc-produit-'+key).remove();
+    }
+
+</script>
+
 {% endblock %}
