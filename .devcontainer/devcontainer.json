@@ -22,7 +22,8 @@
 				"ms-vscode.vscode-typescript-next",
 				"bmewburn.vscode-intelephense-client",
 				"xdebug.php-debug",
-				"devsense.phptools-vscode"
+				"devsense.phptools-vscode",
+				"ms-azuretools.vscode-docker"
 			]
 		}
 	}
