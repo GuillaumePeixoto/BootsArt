@@ -1,0 +1,9 @@
+{% for data in produit %}
+    <div class="col-6 col-md-4 col-xl-3 d-flex p-2">
+        <div id="product-1" class="single-product my-auto">
+            <div class="part-1 grow">
+                <a href="{{path("fiche_produit", {'id' : data.id})}} "><img src="{{ asset("uploads/photos/" ~ data.photo)}}" class="w-100" alt=""></a>
+            </div>
+        </div>
+    </div>
+{% endfor %}

@@ -26,6 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class DisController extends AbstractController
 {
@@ -45,17 +46,27 @@ class DisController extends AbstractController
     #[Route('/produits/{categorie}', name: 'produits_par_cat')]
     public function produits(ProduitRepository $repoProduct, Request $request): Response
     {      
-        $data = new SearchData(); // j'initie mon objet search data
-        $data->page = $request->get('page', 1); // j'associe à la variable page de SearchData la valeur passer dans le formulaire sinon je prends 1 par défaut
-        $searchForm = $this->createForm(SearchFormType::class, $data); // je crée le formulaire de filtre
-        $searchForm->handleRequest($request); // je récupère les valeurs du formulaire
-        $produit = $repoProduct->findSearch($data); // je lance ma requete en passant mon objet SearchData en paramètres
-
+        $data = new SearchData();
+        $data->page = $request->query->getInt('page', 1);
+        $searchForm = $this->createForm(SearchFormType::class, $data);
+        $searchForm->handleRequest($request);
+        
+        $produits = $repoProduct->findSearch($data);
+    
+        // Si AJAX, renvoyer uniquement les nouveaux produits
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([
+                'html' => $this->renderView('base/_liste.html.twig', ['produit' => $produits]),
+                'nextPage' => $data->page + 1
+            ]);
+        }
+    
         return $this->render('base/tous_nos_produits.html.twig', [
-            'produit' => $produit,
+            'produit' => $produits,
+            'page' => $data->page,
             'searchForm' => $searchForm->createView()
         ]);
-    }
+    }    
 
     
 

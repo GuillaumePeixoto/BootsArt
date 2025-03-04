@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Data\SearchData;
 use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,10 +15,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProduitRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry, PaginatorInterface $paginator)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Produit::class);
-        $this->paginator = $paginator;
     }
 
     // /**
@@ -72,39 +70,34 @@ class ProduitRepository extends ServiceEntityRepository
     {
         $query = $this
             ->createQueryBuilder('produit')
-            ->select('produit', 'categorie', 'format')
+            ->select('DISTINCT produit')
             ->leftJoin('produit.categorie', 'categorie')
             ->leftJoin('produit.format', 'format');
-        // en fonction de la recherche
-        if(!empty($search->q))
-        {
-            $query = $query
-                    ->andWhere('produit.titre LIKE :q')
-                    ->setParameter('q', "%{$search->q}%");
+    
+        // Recherche par titre
+        if (!empty($search->q)) {
+            $query->andWhere('produit.titre LIKE :q')
+                  ->setParameter('q', "%{$search->q}%");
+        }
+    
+        // Filtre par catégories
+        if (!empty($search->categories)) {
+            $query->andWhere('categorie.id IN (:categories)')
+                  ->setParameter('categories', $search->categories);
+        }
+    
+        // Filtre par formats
+        if (!empty($search->formats)) {
+            $query->andWhere('format.id IN (:formats)')
+                  ->setParameter('formats', $search->formats);
         }
 
-        // en fonction des categories selectionner
-        if(!empty($search->categories))
-        {
-            $query = $query
-                    ->andWhere('categorie.id IN (:categories)')
-                    ->setParameter('categories', $search->categories);
-        }
-        // en fonction des formats selectionner
-        if(!empty($search->formats))
-        {
-            $query = $query
-                    ->andWhere('format.id IN (:formats)')
-                    ->setParameter('formats', $search->formats);
-        }
-
-        $query = $query->getQuery();
-        // permet de créer une pagination sur la page produit
-        return $this->paginator->paginate(
-            $query,
-            $search->page,
-            24
-        );
+        $query->groupBy('produit.id');
+    
+        $query->setFirstResult(($search->page - 1) * 20) // Offset
+              ->setMaxResults(20); // Nombre d'éléments à afficher
+    
+        return $query->getQuery()->getResult();
     }
 
     /*
